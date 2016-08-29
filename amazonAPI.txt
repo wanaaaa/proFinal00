@@ -1,0 +1,4 @@
+accesss  /// AKIAIW6OCNVQJWOYXGWA
+associate id ///  wanaaaa-20 
+
+http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAIZQCNHSRVUPOKB3A&AssociateTag=wanaaaa-20&Keywords=the%20hunger%20games&Operation=ItemSearch&SearchIndex=Books&Service=AWSECommerceService&Timestamp=2016-08-26T02%3A11%3A33Z&Signature=D%2BWrPuLzKGHlLM2YSQZdou%2FjCzVIy5pAzSoYa8UGaOg%3D

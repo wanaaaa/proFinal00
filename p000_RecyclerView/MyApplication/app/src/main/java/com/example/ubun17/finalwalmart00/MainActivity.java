@@ -28,6 +28,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     String walURL = "http://api.walmartlabs.com/v1/search?query=chair&format=json&apiKey=usu6xmuc5dha75jepwnp2ds9";
+
     String baseURL = "http://api.walmartlabs.com/v1/search?query=";
 
     TextView textView;
@@ -43,12 +44,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        WalMartSearchCall walMartSearchCall = new WalMartSearchCall();
-//        walMartSearchCall.execute(walURL);
-
         searchTerm = (EditText) findViewById(R.id.searchEdit);
         buSearch = (Button) findViewById(R.id.buSearch);
-//
+
         buSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,26 +59,13 @@ public class MainActivity extends AppCompatActivity {
             }
        });
 
-        
         Log.d("start", "asdfasdfasdfasdfasdfasdfasdfasf");
 
         textView = (TextView) findViewById(R.id.textView);
 
         String stTest = null;
 
-//        while (stTest == null) {
-//
-//            try {
-//                TimeUnit.MILLISECONDS.sleep(300);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//            WalSearchSingleton walSearchSingleton = WalSearchSingleton.getInstance();
-//
-//            String stTestnew = walSearchSingleton.getWalMartSearch().getQuery();
-//            stTest = stTestnew;
-//        }
+
 
         Log.d("before singleton", "----------------------------");
         Log.d("WalSingleton","/////////////// "+ stTest) ;
@@ -89,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listView);
         mAdapter = new ArrayAdapter<String>(MainActivity.this
                 , android.R.layout.simple_list_item_1,arrayList);
-       mListView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
 
     }//End of onCreate
@@ -125,18 +110,16 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("calling", "!!!!!!!!!!"+ ttest);
 
                         final String res = walMartSearch.getQuery();
-                        String itemID =  walMartSearch.getItems().get(0).getItemId().toString();
-                        Log.d("id", "++++++++++++++++++++++ "+ itemID);
 
                         List<Item> listItem = walSearchSingleton.getWalMartSearch().getItems();
                         //arrayList = new ArrayList<String>();
                         for (int i = 0; i < listItem.size(); i ++) {
                             String string = listItem.get(i).getName().toString();
-                            Log.d("ddsdsdsd", string);
-                            arrayList.add(string);
+                            String stringID = listItem.get(i).getItemId().toString();
+                            String idName = stringID+"  :  "+string;
+                            Log.d("ddsdsdsd", stringID);
+                            arrayList.add(idName);
                         }
-
-                       // mAdapter.notifyDataSetChanged();
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
