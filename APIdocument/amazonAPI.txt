@@ -1,0 +1,15 @@
+AWSAccessKeyId=AKIAJKT3TQYIRZPQEQEQ
+AWSSecretKey=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
+associate id ///  wanaaaa-20 
+
+/////////Unsigned
+http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAJKT3TQYIRZPQEQEQ&AssociateTag=wanaaaa-20&Keywords=the%20hunger%20games&Operation=ItemSearch&SearchIndex=Books&Service=AWSECommerceService&Timestamp=2016-08-26T20:36:11Z
+
+//////Signed
+http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAJKT3TQYIRZPQEQEQ&AssociateTag=wanaaaa-20&Keywords=the%20hunger%20games&Operation=ItemSearch&SearchIndex=Books&Service=AWSECommerceService&Timestamp=2016-08-26T03%3A31%3A11Z&Signature=pkAW6tHMaenL3OgspSoGla04D898kSdvpIO%2BuRZQWXM%3D
+
+priceapi.com
+
+IGZCGYQRQXARKYRCLHQRRQKNLVTOXZGYVQOKNPJSPRANENNKGFCJXZXTROGKUWYP
+
+https://api.priceapi.com/jobs/1234567890abcdef12345678?token=IGZCGYQRQXARKYRCLHQRRQKNLVTOXZGYVQOKNPJSPRANENNKGFCJXZXTROGKUWYP
