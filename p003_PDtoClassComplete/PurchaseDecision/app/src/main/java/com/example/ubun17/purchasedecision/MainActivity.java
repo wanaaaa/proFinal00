@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.example.ubun17.purchasedecision.APIcall.WalMartAPI;
 import com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.Item;
 import com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.SingleWarSearch;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText inputItem;
     Button buItem;
+    ImageView imageThumb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
+        String thumbURLtwo = "https://i5.walmartimages.com/asr/8e0c3fb1-673b-4b29-9b8a-46cae3e0d917_1.c5d745d0e28796c3f8b53893ea6e064c.jpeg?odnHeight=100&odnWidth=100&odnBg=FFFFFF";
+        imageThumb = (ImageView) findViewById(R.id.imaThumbMain) ;
+
+        Picasso.with(this).load(thumbURLtwo).resize(100, 100)
+                .into(imageThumb);
 
     }
 
@@ -65,12 +72,10 @@ public class MainActivity extends AppCompatActivity {
             String strWal = singleWarSearch.getQuery();
 
             Log.d("Wal in onPostExecute", "//////////////// "+strWal);
-            Toast.makeText(MainActivity.this, strWal,Toast.LENGTH_LONG).show();
 
             final ArrayList<Item> data = singleWarSearch.getItemList();
             adapter = new AdapterRecyItem(data);
             mRecyclerView.setAdapter(adapter);
-
         }
 
     }
