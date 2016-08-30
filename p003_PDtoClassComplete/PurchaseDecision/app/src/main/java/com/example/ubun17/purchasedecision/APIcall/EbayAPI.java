@@ -17,7 +17,7 @@ public class EbayAPI {
     public EbayAPI() {}
 
     public void EbayCall() {
-        String ebayURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=WanLim-priceCom-PRD-59a67cc35-c54e5d44&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=harry%20potter&paginationInput.entriesPerPage=3";
+        String ebayURL = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=WanLim-priceCom-PRD-59a67cc35-c54e5d44&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=harry%20potter&paginationInput.entriesPerPage=10";
 
         OkHttpClient ebayClient = new OkHttpClient();
 

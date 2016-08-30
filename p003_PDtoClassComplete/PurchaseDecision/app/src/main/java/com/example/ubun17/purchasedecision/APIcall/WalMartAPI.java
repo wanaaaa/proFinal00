@@ -56,10 +56,5 @@ public class WalMartAPI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        SingleWarSearch searResultOne = SingleWarSearch.getInstance();
-
-        Log.d("out of try Single", searResultOne.getQuery());
-
     }
 }

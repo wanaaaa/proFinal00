@@ -43,13 +43,7 @@ public class AdapterRecyItem extends RecyclerView.Adapter<ViewHolderItemList> {
 
         holder.tvItemName.setText((CharSequence) mItems.get(position).getName());
 
-//        Picasso.with(context).load(android_versions.get(i).getAndroid_image_url())
-//                .resize(120, 60).into(viewHolder.img_android);
-
-//        Picasso.with(mContext).load(thumbURL).resize(100, 100)
-//                .into(holder.imageThumb);
-
-        Picasso.with(mContext).load(thumbURL).resize(100, 100)
+        Picasso.with(holder.imageThumb.getContext()).load(thumbURL).resize(100, 100)
                 .into(holder.imageThumb);
     }
 
