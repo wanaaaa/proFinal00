@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,13 +35,12 @@ public class WalMartAPI {
         OkHttpClient walMartClient = new OkHttpClient();
 
         final Request WalMartRequest = new Request.Builder().url(finalURL).build();
-        final List<Item> items = new ArrayList<Item>();
 
         try {
-
             Response response = walMartClient.newCall(WalMartRequest).execute();
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String responseBody = response.body().string();
+
             Gson gson = new Gson();
             WalMartSearch walMartSearch = gson.fromJson(responseBody, WalMartSearch.class);
             String sss = walMartSearch.getQuery();

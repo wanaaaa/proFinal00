@@ -9,13 +9,17 @@ import android.widget.TextView;
  * Created by ubun17 on 8/29/16.
  */
 public class ViewHolderItemList extends RecyclerView.ViewHolder {
-    public TextView tvItemName;
+    public TextView tvItemName, ebayMinPrice, ebayMaxPrice, ebayAverPrice;
     public ImageView imageThumb;
 
     public ViewHolderItemList(View itemView) {
         super(itemView);
 
         imageThumb = (ImageView) itemView.findViewById(R.id.imaThumb);
+
         tvItemName = (TextView) itemView.findViewById(R.id.tvItemName);
+        ebayAverPrice = (TextView) itemView.findViewById(R.id.ebayAverPrice);
+        ebayMinPrice = (TextView) itemView.findViewById(R.id.ebayMinPrice);
+        ebayMaxPrice = (TextView) itemView.findViewById(R.id.ebayMinPrice);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.ubun17.purchasedecision;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
  */
 public class AdapterRecyItem extends RecyclerView.Adapter<ViewHolderItemList> {
     ArrayList<Item> mItems;
-    private Context mContext;
 
     public AdapterRecyItem(ArrayList<Item> args) {
         mItems = args;
@@ -39,7 +37,6 @@ public class AdapterRecyItem extends RecyclerView.Adapter<ViewHolderItemList> {
         SingleWarSearch warSearch = SingleWarSearch.getInstance();
         thumbURL = warSearch.getItemList().get(position).getThumbnailImage();
         thumbURLtwo = "https://i5.walmartimages.com/asr/8e0c3fb1-673b-4b29-9b8a-46cae3e0d917_1.c5d745d0e28796c3f8b53893ea6e064c.jpeg?odnHeight=100&odnWidth=100&odnBg=FFFFFF";
-
 
         holder.tvItemName.setText((CharSequence) mItems.get(position).getName());
 
