@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ubun17.purchasedecision.APIcall.EbayAPI;
+import com.example.ubun17.purchasedecision.APIcall.TwitterAPI;
 import com.example.ubun17.purchasedecision.APIcall.WalMartAPI;
 import com.example.ubun17.purchasedecision.ResponseObject.Ebay.Example;
 import com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.Item;
@@ -35,6 +36,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TwitterAPI testTwett = new TwitterAPI("apple ipad air md785ll/a");
+        testTwett.TwitterCalling();
+
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleViewItemList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mItems = new ArrayList<>();
+        mEbayExamples = new ArrayList<>();
+        adapter = new AdapterRecyItem(mItems, mEbayExamples);
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         buItem = (Button) findViewById(R.id.buSearch);
         buItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,17 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 ebayCalling.execute("calling");
             }
         });//End of button
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleViewItemList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-
-        mItems = new ArrayList<>();
-        mEbayExamples = new ArrayList<>();
-        adapter = new AdapterRecyItem(mItems, mEbayExamples);
-        mRecyclerView.setAdapter(adapter);
     }
+
 
     class AsycAPIcalling extends AsyncTask<String, Double, List<Item>> {
 
