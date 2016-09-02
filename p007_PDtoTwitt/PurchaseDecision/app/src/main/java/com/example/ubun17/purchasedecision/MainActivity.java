@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,16 +12,20 @@ import android.widget.Toast;
 
 import com.example.ubun17.purchasedecision.APIcall.EbayAPI;
 import com.example.ubun17.purchasedecision.APIcall.WalMartAPI;
+import com.example.ubun17.purchasedecision.ResponseObject.Ebay.Example;
 import com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.Item;
 import com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.SingleWarSearch;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.ubun17.purchasedecision.ResponseObject.WalMartObject.SingleWarSearch.getInstance;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     AdapterRecyItem adapter;
     ArrayList<Item> mItems;
+    ArrayList<Example> mEbayExamples;
 
     EditText inputItem;
     Button buItem;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 String stSearchItem = inputItem.getText().toString();
                 AsycAPIcalling asycAPIcalling = new AsycAPIcalling();
                 asycAPIcalling.execute(stSearchItem);
+
+                EbayAsyncCalling ebayCalling = new EbayAsyncCalling();
+                ebayCalling.execute("calling");
             }
         });//End of button
 
@@ -50,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         mItems = new ArrayList<>();
-        adapter = new AdapterRecyItem(mItems);
+        mEbayExamples = new ArrayList<>();
+        adapter = new AdapterRecyItem(mItems, mEbayExamples);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -61,21 +68,14 @@ public class MainActivity extends AppCompatActivity {
             WalMartAPI walCalling = new WalMartAPI(strings[0]);
             walCalling.WalMartCall();
 
-            SingleWarSearch singleWarSearch = SingleWarSearch.getInstance();
+            SingleWarSearch singleWarSearch = getInstance();
             ArrayList<Item> walItems = singleWarSearch.getItemList();
 
             for (int i = 0; i < walItems.size(); i ++) {
                 String searTerm = walItems.get(i).getName();
-                EbayAPI ebayCall= new EbayAPI(searTerm);
-                ebayCall.EbayCall();
 
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                singleWarSearch.getEbayExampleList().add(null);
             }
-
             return null;
         }
 
@@ -88,44 +88,63 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Item> items) {
-            SingleWarSearch singleWarSearch = SingleWarSearch.getInstance();
+            SingleWarSearch singleWarSearch = getInstance();
             String strWal = singleWarSearch.getQuery();
 
-            int testInt = singleWarSearch.getEbayExampleList().size();
-;
-            String timesEbay;
-            for (int i = 0; i < testInt; i ++ ) {
-                if (singleWarSearch.getEbayExampleList().get(i) != null) {
-                    timesEbay = String.valueOf(singleWarSearch.getEbayExampleList()
-                            .get(i).getFindItemsByKeywordsResponse().get(0).getTimestamp());
-                } else {
-                    timesEbay = "nulllllllllllllllll";
-                }
-
-                Log.d("Times", "@@@@@@"+ timesEbay);
-            }
-
-
-
-            String test = String.valueOf(testInt);
-//            String testTwo = singleWarSearch.getEbayExampleList().get(0)
-//                    .getFindItemsByKeywordsResponse().get(0).getSearchResult().get(0)
-//                    .getItem().get(0).getSellingStatus().get(0).getCurrentPrice().get(0)
-//                    .getValue();
-//            Log.d("test", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+ testTwo);
-
-            String testOne = String.valueOf(singleWarSearch.getItemList().size());
-            Log.d("test null", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+ test);
-            Log.d("test walsize", "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+ testOne);
-
-            Log.d("Wal in onPostExecute", "//////////////// "+strWal);
-
-            final ArrayList<Item> data = singleWarSearch.getItemList();
+            final ArrayList<Item> dataItem = singleWarSearch.getItemList();
+            final ArrayList<Example> dataEbay = singleWarSearch.getEbayExampleList();
 
             mItems.clear();
-            mItems.addAll(data);
+            mItems.addAll(dataItem);
+            mEbayExamples.clear();
+            mEbayExamples.addAll(dataEbay);
             adapter.notifyDataSetChanged();
         }
+    }//End of AsycAPIcalling
 
-    }
+    class EbayAsyncCalling extends  AsyncTask<String, Double, List<Item>> {
+
+        @Override
+        protected List<Item> doInBackground(String... strings) {
+            SingleWarSearch singleWarSearch = getInstance();
+            ArrayList<Item> walItems = singleWarSearch.getItemList();
+
+            for (int i = 0; i < walItems.size(); i ++) {
+                String searTerm = walItems.get(i).getName();
+                EbayAPI ebayCall = new EbayAPI(searTerm, i);
+                ebayCall.EbayCall();
+
+                try {
+                    Thread.sleep(255);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+               // singleWarSearch
+            }
+            return null;
+        }
+
+        @Override
+        protected  void onProgressUpdate(Double... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            SingleWarSearch singleWarSearch = getInstance();
+            String strWal = singleWarSearch.getQuery();
+
+            final ArrayList<Item> dataItem = singleWarSearch.getItemList();
+            final ArrayList<Example> dataEbay = singleWarSearch.getEbayExampleList();
+
+//            mItems.clear();
+//            mItems.addAll(dataItem);
+            mEbayExamples.clear();
+            mEbayExamples.addAll(dataEbay);
+            adapter.notifyDataSetChanged();
+
+        }
+    }// End of EbayAsyncCalling
+
 }

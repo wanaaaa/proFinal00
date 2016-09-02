@@ -17,9 +17,11 @@ import okhttp3.Response;
  */
 public class EbayAPI {
     String mURL;
+    int mPosition;
 
-    public EbayAPI(String url) {
+    public EbayAPI(String url, int num) {
         mURL = url;
+        mPosition = num;
     }
 
     public void EbayCall() {
@@ -50,33 +52,30 @@ public class EbayAPI {
                     .getSearchResult().get(0).getCount();
             Log.d("count..", countSt);
             if (!countSt.matches("0")) {
-//                String Title = ebayResult
-//                        .getFindItemsByKeywordsResponse().get(0).getSearchResult()
-//                        .get(0).getItem().get(0).getTitle().get(0);
 
                 //warSearch.addExample(ebayResult);
-                warSearch.addExample(ebayResult);
+                warSearch.getEbayExampleList().set(mPosition, ebayResult);
 
                 int itemSize = ebayResult
                         .getFindItemsByKeywordsResponse().get(0).getSearchResult()
                         .get(0).getItem().size();
                 for(int i = 0; i < itemSize; i++) {
-                    String stPrice = ebayResult
+                    String stPrice = String.valueOf(ebayResult
                             .getFindItemsByKeywordsResponse().get(0).getSearchResult()
                             .get(0).getItem().get(i).getSellingStatus()
-                            .get(0).getCurrentPrice().get(0).getValue();
+                            .get(0).getCurrentPrice().get(0).getValue());
                     Log.d("price..",stPrice);
                     //Toast.makeText(getC)
                 }
             } else {
-                warSearch.addExample(null);
+                //warSearch.addExample(null);
             }
 
             Log.d("in Ebay call", stRepnoseBody);
             response.body().close();
         } catch (IOException e) {
-            SingleWarSearch warSearch = SingleWarSearch.getInstance();
-            warSearch.addExample(null);
+            //waterSingleWarSearch warSearch = SingleWarSearch.getInstance();
+            //warSearch.addExample(null);
             e.printStackTrace();
             //response.body().close();
         }
